@@ -33,7 +33,7 @@ abstract interface class RemoteDataSource {
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
-  final String apiEndpoint = 'http://10.0.2.2:4000';
+  final String apiEndpoint = 'http://127.0.0.1:4000';
 
   @override
   Future<List<Branch>> fetchBranches() async {
@@ -261,7 +261,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     final String fileName = file.name;
 
     try {
-      if (Platform.isAndroid) {
+      if (file_handler.Platform.isAndroid) {
         final androidInfo = await DeviceInfoPlugin().androidInfo;
         final sdkInt = androidInfo.version.sdkInt;
 
@@ -287,11 +287,11 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         }
 
         // Use a safe path
-        Directory? baseDir = await getExternalStorageDirectory();
+        file_handler.Directory? baseDir = await getExternalStorageDirectory();
 
         // Create custom subfolder
         final downloadsDir =
-            Directory("${baseDir!.path}/StudyPortal/Downloads");
+            file_handler.Directory("${baseDir!.path}/StudyPortal/Downloads");
         if (!await downloadsDir.exists()) {
           await downloadsDir.create(recursive: true);
         }
@@ -321,7 +321,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         // iOS or other platforms
         final dir = await getApplicationSupportDirectory();
         final filePath = "${dir.path}/StudyPortal/Downloads/$fileName";
-        final downloadsDir = Directory("${dir.path}/StudyPortal/Downloads");
+        final downloadsDir =
+            file_handler.Directory("${dir.path}/StudyPortal/Downloads");
         if (!await downloadsDir.exists()) {
           await downloadsDir.create(recursive: true);
         }
@@ -333,9 +334,9 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     } catch (e) {
       print("Download error: $e");
       throw Exception("Failed to download file: $e");
-      }
+    }
   }
-  
+
   @override
   Future<String> uploadFile(File file) async {
     try {
