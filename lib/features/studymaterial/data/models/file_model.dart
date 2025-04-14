@@ -12,12 +12,13 @@ class FileModel extends File {
 
   factory FileModel.fromJson(Map<String, dynamic> map) {
     return FileModel(
-        id: map["id"],
-        name: map["name"],
+        id: map["file_id"],
+        name: map["file_name"],
         courseCode: map["course_code"],
-        s3Url: map["s3_url"],
-        status: map["status"],
-        description: map["description"],
-        type: map["type"]);
+        s3Url: map["file_s3_url"],
+        status: map["file_status"] ??
+            "approved", // can't find the file_status field in the json response from the get request, so hardcoded for right now
+        description: map["file_description"],
+        type: map["file_type"]);
   }
 }

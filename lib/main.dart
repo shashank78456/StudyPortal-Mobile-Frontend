@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studyportal/features/studymaterial/data/datasources/remote_data_source.dart';
 import 'package:studyportal/features/studymaterial/data/repository/repository_impl.dart';
+import 'package:studyportal/features/studymaterial/domain/usecases/download_file.dart';
 import 'package:studyportal/features/studymaterial/domain/usecases/fetch_bookmarks.dart';
+import 'package:studyportal/features/studymaterial/domain/usecases/fetch_courses.dart';
+import 'package:studyportal/features/studymaterial/domain/usecases/fetch_files.dart';
 import 'package:studyportal/features/studymaterial/domain/usecases/fetch_pins.dart';
 import 'package:studyportal/features/studymaterial/domain/usecases/fetch_branches.dart';
+import 'package:studyportal/features/studymaterial/presentation/cubit/download_file/download_file_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_bookmarks/fetch_bookmarks_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_branches/fetch_branches_cubit.dart';
+import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_courses/fetch_courses_cubit.dart';
+import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_files/fetch_files_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_pins/fetch_pins_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/bottom_navbar/sp_bottom_navbar.dart';
@@ -15,8 +21,21 @@ import 'package:studyportal/features/studymaterial/presentation/pages/home_flow/
 import 'package:studyportal/features/studymaterial/presentation/pages/profile_page/profile_page.dart';
 import 'package:studyportal/core/theme/theme_data.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiBlocProvider(providers: [
+    BlocProvider(
+        create: (_) => DownloadFileCubit(
+            downloadfile:
+                DownloadFile(RepositoryImpl(RemoteDataSourceImpl())))),
+    BlocProvider(
+        create: (_) => FetchFilesCubit(
+            fetchFiles: FetchFiles(RepositoryImpl(RemoteDataSourceImpl())))),
+    BlocProvider(
+        create: (_) => FetchCoursesCubit(
+            fetchCourses:
+                FetchCourses(RepositoryImpl(RemoteDataSourceImpl())))),
     BlocProvider(
         create: (_) => FetchBranchesCubit(
             fetchBranches:
@@ -64,6 +83,7 @@ class _StudyPortalState extends State<StudyPortal> {
       enableScaleText: () => false,
       builder: (context, child) {
         return MaterialApp(
+          navigatorKey: navigatorKey,
           theme: GlobalThemeData.lightThemeData,
           debugShowCheckedModeBanner: false,
           home: child,

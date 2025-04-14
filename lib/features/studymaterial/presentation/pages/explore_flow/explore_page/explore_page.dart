@@ -18,12 +18,10 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  List<BranchCard> branchCards = [];
 
   @override
   void initState() {
     super.initState();
-    branchCards = HardCodedConstants.branchCards;
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
   }
 
@@ -41,17 +39,13 @@ class _ExplorePageState extends State<ExplorePage>
         if (state is FetchBranchesLoading || state is FetchBranchesInitial) {
           return const Loader();
         } else if (state is FetchBranchesFailure) {
+          print(state.message);
           return Text(state.message);
         } else if (state is FetchBranchesLoaded) {
-          int index = 0;
           final List<BranchCard> branchCards = state.branches.map((branch) {
-            index++;
             return BranchCard(
-              title: branch.name,
-              subtitle: branch.department,
-              id: index,
+              branch: branch,
               pin: Pin.none,
-              onTap: () => {},
             );
             //add onTap
           }).toList();
@@ -112,13 +106,13 @@ class _ExplorePageState extends State<ExplorePage>
                           scrollSectionHeight: 160.h * 3.5 - 33.h,
                           scroll: true,
                           rows: 3.5,
-                          branchCards: branchCards,
+                          searchable: branchCards,
                         ),
                         ScrollSection(
                           scrollSectionHeight: 160.h * 3.5 - 33.h,
                           scroll: true,
                           rows: 3.5,
-                          branchCards: branchCards.length > 2
+                          searchable: branchCards.length > 2
                               ? [branchCards[1], branchCards[2]]
                               : [],
                         ),

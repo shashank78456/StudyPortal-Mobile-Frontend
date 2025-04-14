@@ -17,6 +17,7 @@ abstract interface class Repository {
   Future<Either<Failure, Bookmark>> addBookmark(Bookmark bookmark);
   Future<Either<Failure, Pin>> removePin(Pin pin);
   Future<Either<Failure, Bookmark>> removeBookmark(Bookmark bookmark);
+  Future<Either<Failure, File>> downloadFile(File file);
   Future<Either<Failure, String>> uploadFile(File file);
   Future<Either<Failure, File>> uploadFileComplete(File file);
   Future<Either<Failure, String>> uploadFileToS3Bucket(

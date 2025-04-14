@@ -21,13 +21,9 @@ class SeeAllPinnedPage extends StatelessWidget {
         } else if (state is FetchPinsFailure) {
           return Text(state.message);
         } else if (state is FetchPinsLoaded) {
-          int index = 0;
           final List<BranchCard> pinnedCards = state.pins.map((branch) {
-            index++;
             return BranchCard(
-              title: branch.name,
-              subtitle: branch.department,
-              id: index,
+              branch: branch,
               pin: Pin.none,
               onTap: () => {},
             );
@@ -56,7 +52,7 @@ class SeeAllPinnedPage extends StatelessWidget {
                         scrollSectionHeight: (160 * 4 - 18).h,
                         scroll: true,
                         rows: 4,
-                        branchCards: pinnedCards),
+                        searchable: pinnedCards),
                     SizedBox(height: 20.h),
                   ],
                 ),

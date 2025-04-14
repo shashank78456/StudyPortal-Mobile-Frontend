@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'dart:io' as file_handler;
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:studyportal/core/errors/exceptions.dart';
 import 'package:studyportal/features/studymaterial/data/models/branch_model.dart';
 import 'package:studyportal/features/studymaterial/data/models/course_model.dart';
@@ -22,14 +26,14 @@ abstract interface class RemoteDataSource {
   Future<void> addBookmark(Bookmark bookmark);
   Future<void> removePin(Pin pin);
   Future<void> removeBookmark(Bookmark bookmark);
+  Future<void> downloadFile(File file);
   Future<String> uploadFile(File file);
   Future<void> uploadFileComplete(File file);
   Future<void> uploadFileToS3Bucket(String fileName, String fileUrl);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
-  // final String apiEndpoint = 'http://10.0.2.2:4000';
-  final String apiEndpoint = 'http://10.81.56.32:4000';
+  final String apiEndpoint = 'http://10.0.2.2:4000';
 
   @override
   Future<List<Branch>> fetchBranches() async {
@@ -95,7 +99,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       }
 
       return (responseData["data"] as List<dynamic>)
-          .map((file) => FileModel.fromJson(file))
+          .map((bookmark) => FileModel.fromJson(bookmark))
           .toList();
     } catch (e) {
       throw ServerException(e.toString());
@@ -117,10 +121,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       if (responseData["data"] == null) {
         throw const ServerException("No Courses");
       }
-
-      return (responseData["data"] as List<dynamic>)
-          .map((file) => CourseModel.fromJson(file))
-          .toList();
+      return (responseData["data"] as List<dynamic>).map((course) {
+        final fileIds =
+            (course["files"] as List<dynamic>).map((e) => e as int).toList();
+        course["files"] =
+            fileIds; // Optional, in case fromJson expects List<int>
+        return CourseModel.fromJson(course);
+      }).toList();
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -141,10 +148,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       if (responseData["data"] == null) {
         throw const ServerException("No Files");
       }
-
-      return (responseData["data"] as List<dynamic>)
+      print(responseData["data"][0]);
+      final res = (responseData["data"] as List<dynamic>)
           .map((file) => FileModel.fromJson(file))
           .toList();
+
+      return res;
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -246,6 +255,87 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     }
   }
 
+  @override
+  Future<void> downloadFile(File file) async {
+    final String url = file.s3Url;
+    final String fileName = file.name;
+
+    try {
+      if (Platform.isAndroid) {
+        final androidInfo = await DeviceInfoPlugin().androidInfo;
+        final sdkInt = androidInfo.version.sdkInt;
+
+        bool hasPermission = false;
+
+        if (sdkInt >= 30) {
+          var status = await Permission.manageExternalStorage.status;
+          if (!status.isGranted) {
+            status = await Permission.manageExternalStorage.request();
+          }
+          hasPermission = status.isGranted;
+        } else {
+          var status = await Permission.storage.status;
+          if (!status.isGranted) {
+            status = await Permission.storage.request();
+          }
+          hasPermission = status.isGranted;
+        }
+
+        if (!hasPermission) {
+          await openAppSettings();
+          throw Exception("Storage permission not granted");
+        }
+
+        // Use a safe path
+        Directory? baseDir = await getExternalStorageDirectory();
+
+        // Create custom subfolder
+        final downloadsDir =
+            Directory("${baseDir!.path}/StudyPortal/Downloads");
+        if (!await downloadsDir.exists()) {
+          await downloadsDir.create(recursive: true);
+        }
+
+        final filePath = "${downloadsDir.path}/$fileName";
+
+        Dio dio = Dio();
+        await dio.download(
+          url,
+          filePath,
+          options: Options(
+            headers: {
+              'User-Agent': 'Mozilla/5.0',
+              'Accept': 'application/pdf',
+            },
+          ),
+          onReceiveProgress: (received, total) {
+            if (total != -1) {
+              print(
+                  "Downloading: ${(received / total * 100).toStringAsFixed(0)}%");
+            }
+          },
+        );
+
+        print("PDF saved at: $filePath");
+      } else {
+        // iOS or other platforms
+        final dir = await getApplicationSupportDirectory();
+        final filePath = "${dir.path}/StudyPortal/Downloads/$fileName";
+        final downloadsDir = Directory("${dir.path}/StudyPortal/Downloads");
+        if (!await downloadsDir.exists()) {
+          await downloadsDir.create(recursive: true);
+        }
+
+        Dio dio = Dio();
+        await dio.download(url, filePath);
+        print("PDF saved at: $filePath");
+      }
+    } catch (e) {
+      print("Download error: $e");
+      throw Exception("Failed to download file: $e");
+      }
+  }
+  
   @override
   Future<String> uploadFile(File file) async {
     try {

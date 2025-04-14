@@ -5,7 +5,7 @@ class CourseModel extends Course {
       {required super.courseCode,
       required super.courseName,
       required super.semester,
-      required super.branch,
+      required super.branchId,
       required super.id,
       required super.files});
 
@@ -15,7 +15,7 @@ class CourseModel extends Course {
       courseCode: map["course_code"],
       courseName: map["course_name"],
       semester: map["semester"],
-      branch: map["branch"],
+      branchId: map["branch"],
       files: map["files"],
     );
   }

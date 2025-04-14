@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:studyportal/core/theme/constants.dart';
-import 'package:studyportal/features/studymaterial/presentation/widgets/branch_card/branch_card.dart';
+import 'package:studyportal/features/studymaterial/presentation/utils/searchable.dart';
 
 class ScrollSection extends StatelessWidget {
   const ScrollSection({
     super.key,
     required this.rows,
-    required this.branchCards,
+    required this.searchable,
     required this.scroll,
     this.title = "",
     required this.scrollSectionHeight,
   });
 
   final double rows;
-  final List<BranchCard> branchCards;
+  final List<Searchable> searchable;
   final bool scroll;
   final String title;
   final double scrollSectionHeight;
@@ -47,7 +47,7 @@ class ScrollSection extends StatelessWidget {
               ),
             ),
           // Remove the Expanded widget
-          branchCards.isEmpty
+          searchable.isEmpty
               ? const Center(
                   child: Text(
                     "No items to display",
@@ -61,7 +61,7 @@ class ScrollSection extends StatelessWidget {
                         scroll ? null : const NeverScrollableScrollPhysics(),
                     desiredItemWidth: 160.w,
                     minSpacing: 12.r,
-                    children: branchCards,
+                    children: searchable as List<Widget>,
                   ),
                 )
         ],

@@ -114,6 +114,16 @@ class RepositoryImpl implements Repository {
   }
 
   @override
+  Future<Either<Failure, File>> downloadFile(File file) async {
+    try {
+      await remoteDataSource.downloadFile(file);
+      return right(file);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+  
+  @override
   Future<Either<Failure, String>> uploadFile(File file) async {
     try {
       final String url = await remoteDataSource.uploadFile(file);

@@ -2,49 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/core/theme/constants.dart';
-import 'package:studyportal/features/studymaterial/domain/entities/branch.dart';
+import 'package:studyportal/features/studymaterial/domain/entities/course.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/explore_flow/files_list_page/files_list_page.dart';
+import 'package:studyportal/features/studymaterial/presentation/utils/searchable.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/bookmarked_pin/pin_active.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/bookmarked_pin/pin_inactive.dart';
-import 'package:studyportal/features/studymaterial/presentation/widgets/branch_card/branch_card.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/tools/pin_enum.dart';
 
-class CourseCard extends StatelessWidget implements BranchCard {
-  @override
-  final String title;
-  @override
-  final String subtitle;
-  final Branch branch;
-  @override
+class CourseCard extends StatelessWidget implements Searchable {
+  final Course course;
   final Pin pin;
-  @override
   final VoidCallback? onTap;
-
-  final int semester;
 
   const CourseCard({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.branch,
-    required this.pin,
-    required this.semester,
     this.onTap,
+    required this.pin,
+    required this.course,
   });
+
+  @override
+  String get title => course.courseCode;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap ??
           () {
-            Navigator.of(context).push(FilesListPage.route(context, title));
+            Navigator.of(context)
+                .push(FilesListPage.route(context, course.courseCode));
           },
       child: Container(
         width: 160.w,
         height: 160.h,
         padding: const EdgeInsets.only(bottom: 12).w,
         decoration: BoxDecoration(
-          color: Color(StudyPortalConstants.spColorList[id % 4]),
+          color: Color(StudyPortalConstants.spColorList[course.branchId % 4]),
           borderRadius: BorderRadius.circular(12).w,
         ),
         child: ClipRRect(
@@ -82,7 +75,7 @@ class CourseCard extends StatelessWidget implements BranchCard {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      course.courseCode,
                       style: TextStyle(
                         overflow: TextOverflow.clip,
                         color: Colors.white,
@@ -94,7 +87,7 @@ class CourseCard extends StatelessWidget implements BranchCard {
                       height: 4.h,
                     ),
                     Text(
-                      subtitle,
+                      course.courseName,
                       style: TextStyle(
                         overflow: TextOverflow.clip,
                         color: Colors.white,
@@ -111,7 +104,4 @@ class CourseCard extends StatelessWidget implements BranchCard {
       ),
     );
   }
-
-  @override
-  int get id => branch.id;
 }

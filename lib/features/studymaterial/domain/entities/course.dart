@@ -3,7 +3,7 @@ class Course {
   final String courseCode;
   final String courseName;
   final int semester;
-  final int branch;
+  final int branchId;
   final List<int>? files;
 
   Course(
@@ -11,6 +11,6 @@ class Course {
       required this.courseCode,
       required this.courseName,
       required this.semester,
-      required this.branch,
+      required this.branchId,
       required this.files});
 }

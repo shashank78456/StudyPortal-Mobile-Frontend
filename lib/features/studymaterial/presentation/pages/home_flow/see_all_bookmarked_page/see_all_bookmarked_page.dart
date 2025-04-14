@@ -22,12 +22,9 @@ class SeeAllBookmarkedPage extends StatelessWidget {
           return Text(state.message);
         } else if (state is FetchBookmarksLoaded) {
           final List<FileTile> fileTiles = state.bookmarks.map((file) {
-            FileType fileType = fileTypeFromString(file.type);
             //Is there a need to handle invalid file type? Need to be discussed
             return FileTile(
-              title: file.name,
-              fileType: fileType,
-              courseCode: file.courseCode,
+              file: file,
             );
             //add onTap
           }).toList();

@@ -13,6 +13,7 @@ class FetchFilesCubit extends Cubit<FetchFilesState> {
   Future<void> getFiles(String courseCode) async {
     emit(FetchFilesLoading());
     final response = await fetchFiles(courseCode);
+    print(response);
     response.fold((failure) => emit(FetchFilesFailure(failure.message)),
         (files) => emit(FetchFilesLoaded(files)));
   }

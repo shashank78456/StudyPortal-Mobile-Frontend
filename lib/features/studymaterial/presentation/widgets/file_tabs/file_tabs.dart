@@ -133,7 +133,8 @@ class _FilterTabBarState extends State<FileTabs> with TickerProviderStateMixin {
                           size: widget.size,
                           fileTiles: widget.fileTiles
                               .where((fileTile) =>
-                                  fileTile.fileType == FileType.notes)
+                                  fileTypeFromString(fileTile.file.type) ==
+                                  FileType.notes)
                               .toList()),
                     ),
                   ),
@@ -146,7 +147,8 @@ class _FilterTabBarState extends State<FileTabs> with TickerProviderStateMixin {
                           size: widget.size,
                           fileTiles: widget.fileTiles
                               .where((fileTile) =>
-                                  fileTile.fileType == FileType.tut)
+                                  fileTypeFromString(fileTile.file.type) ==
+                                  FileType.tut)
                               .toList()),
                     ),
                   ),
@@ -159,7 +161,8 @@ class _FilterTabBarState extends State<FileTabs> with TickerProviderStateMixin {
                           size: widget.size,
                           fileTiles: widget.fileTiles
                               .where((fileTile) =>
-                                  fileTile.fileType == FileType.pyqs)
+                                  fileTypeFromString(fileTile.file.type) ==
+                                  FileType.pyqs)
                               .toList()),
                     ),
                   ),
@@ -172,7 +175,8 @@ class _FilterTabBarState extends State<FileTabs> with TickerProviderStateMixin {
                           size: widget.size,
                           fileTiles: widget.fileTiles
                               .where((fileTile) =>
-                                  fileTile.fileType == FileType.book)
+                                  fileTypeFromString(fileTile.file.type) ==
+                                  FileType.book)
                               .toList()),
                     ),
                   ),
@@ -185,7 +189,8 @@ class _FilterTabBarState extends State<FileTabs> with TickerProviderStateMixin {
                           size: widget.size,
                           fileTiles: widget.fileTiles
                               .where((fileTile) =>
-                                  fileTile.fileType == FileType.link)
+                                  fileTypeFromString(fileTile.file.type) ==
+                                  FileType.link)
                               .toList()),
                     ),
                   ),

@@ -7,7 +7,6 @@ import 'package:studyportal/features/studymaterial/presentation/widgets/file_til
 import 'package:studyportal/features/studymaterial/presentation/widgets/loader/loader.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/more_info_button/more_info_button.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/home_flow/see_all_bookmarked_page/see_all_bookmarked_page.dart';
-import 'package:studyportal/features/studymaterial/presentation/widgets/tools/file_type_enum.dart';
 
 class BookmarkedSection extends StatelessWidget {
   const BookmarkedSection({
@@ -67,12 +66,9 @@ class BookmarkedSection extends StatelessWidget {
                 } else if (state is FetchBookmarksLoaded) {
                   final List<FileTile> bookmarkedTiles =
                       state.bookmarks.map((file) {
-                    FileType fileType = fileTypeFromString(file.type);
                     //Is there a need to handle invalid file type? Need to be discussed
                     return FileTile(
-                      title: file.name,
-                      fileType: fileType,
-                      courseCode: file.courseCode,
+                      file: file,
                     );
                     //add onTap
                   }).toList();

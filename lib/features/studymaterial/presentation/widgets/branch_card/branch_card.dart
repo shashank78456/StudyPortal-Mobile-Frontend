@@ -10,29 +10,22 @@ import 'package:studyportal/features/studymaterial/presentation/widgets/bookmark
 import 'package:studyportal/features/studymaterial/presentation/widgets/tools/pin_enum.dart';
 
 class BranchCard extends StatelessWidget implements Searchable {
-  @override
-  final String title;
-  final String subtitle;
-  final int id;
   final Pin pin;
   final VoidCallback? onTap;
+  final Branch branch;
 
   const BranchCard(
-      {super.key,
-      required this.title,
-      required this.subtitle,
-      required this.id,
-      required this.pin,
-      this.onTap});
-
+      {super.key, required this.branch, required this.pin, this.onTap});
+  @override
+  String get title => branch.name;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
+      // onTap: onTap ??
       onTap: onTap ??
           () {
             Navigator.of(context).push(
-              CourseListPage.route(
-                  Branch(name: title, department: subtitle, id: 0)),
+              CourseListPage.route(branch),
             );
           },
       child: Container(
@@ -40,7 +33,7 @@ class BranchCard extends StatelessWidget implements Searchable {
         height: 160.h,
         padding: const EdgeInsets.only(bottom: 12).w,
         decoration: BoxDecoration(
-          color: Color(StudyPortalConstants.spColorList[id % 4]),
+          color: Color(StudyPortalConstants.spColorList[branch.id % 4]),
           borderRadius: BorderRadius.circular(12).w,
         ),
         child: ClipRRect(
@@ -59,15 +52,16 @@ class BranchCard extends StatelessWidget implements Searchable {
                     ),
                   ),
                   Align(
-                      alignment: AlignmentDirectional.topEnd,
-                      child: Container(
-                        margin: const EdgeInsets.all(10).w,
-                        child: (pin == Pin.inactive)
-                            ? const PinInactive()
-                            : (pin == Pin.active)
-                                ? const SizedBox(child: PinActive())
-                                : const Opacity(opacity: 0),
-                      ))
+                    alignment: AlignmentDirectional.topEnd,
+                    child: Container(
+                      margin: const EdgeInsets.all(10).w,
+                      child: (pin == Pin.inactive)
+                          ? const PinInactive()
+                          : (pin == Pin.active)
+                              ? const SizedBox(child: PinActive())
+                              : const Opacity(opacity: 0),
+                    ),
+                  )
                 ],
               ),
               const Spacer(),
@@ -78,7 +72,7 @@ class BranchCard extends StatelessWidget implements Searchable {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      branch.name,
                       style: TextStyle(
                         overflow: TextOverflow.clip,
                         color: Colors.white,
@@ -90,7 +84,7 @@ class BranchCard extends StatelessWidget implements Searchable {
                       height: 4.h,
                     ),
                     Text(
-                      subtitle,
+                      branch.department,
                       style: TextStyle(
                         overflow: TextOverflow.clip,
                         color: Colors.white,
