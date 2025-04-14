@@ -122,7 +122,7 @@ class RepositoryImpl implements Repository {
       return left(Failure(e.message));
     }
   }
-  
+
   @override
   Future<Either<Failure, String>> uploadFile(File file) async {
     try {

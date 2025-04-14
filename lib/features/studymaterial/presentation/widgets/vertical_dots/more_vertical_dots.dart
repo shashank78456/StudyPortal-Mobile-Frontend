@@ -4,11 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/domain/entities/file.dart';
-import 'package:studyportal/features/studymaterial/domain/usecases/download_file.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/download_file/download_file_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/utils/show_report_sheet/show_report_sheet.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/sp_pop_up_menu_item/sp_pop_up_menu_item.dart';
-import 'package:studyportal/main.dart';
 
 class MoreVerticalDots extends StatelessWidget {
   final File file;

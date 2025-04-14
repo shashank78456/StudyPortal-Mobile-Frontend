@@ -4,7 +4,6 @@ import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_book
 import 'package:studyportal/features/studymaterial/presentation/widgets/file_tabs/file_tabs.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/file_tiles/file_tile.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/loader/loader.dart';
-import 'package:studyportal/features/studymaterial/presentation/widgets/tools/file_type_enum.dart';
 
 class SeeAllBookmarkedPage extends StatelessWidget {
   const SeeAllBookmarkedPage({super.key});
