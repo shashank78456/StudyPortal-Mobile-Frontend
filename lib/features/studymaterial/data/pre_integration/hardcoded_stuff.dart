@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:studyportal/features/studymaterial/domain/entities/file.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/file_tiles/file_tile.dart';
+import 'package:studyportal/features/studymaterial/presentation/widgets/tools/file_type_enum.dart';
+import 'package:studyportal/features/studymaterial/presentation/widgets/activity_card/activity_card.dart';
+import 'package:studyportal/features/studymaterial/presentation/widgets/tools/activity_status_enum.dart';
 
 class HardCodedConstants {
   static const List<Color> courseCardColors = [
@@ -114,7 +117,116 @@ class HardCodedConstants {
       ),
     ),
   ];
+
   static List<FileTile> recentTiles = fileTiles;
   static List<FileTile> bookmarkedTiles = fileTiles;
   static List<FileTile> downloadedTiles = fileTiles;
+
+  static final List<Activity> activities = [
+    Activity(
+        title: "HC Verma Physics",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.pending,
+        message: "message",
+        fileType: FileType.notes),
+    Activity(
+        title: "Yes",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.approved,
+        message: "message",
+        fileType: FileType.tut),
+    Activity(
+        title: "Sample test title",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.rejected,
+        message: "message",
+        fileType: FileType.book),
+    Activity(
+        title: "Mathematics",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.approved,
+        message: "message",
+        fileType: FileType.link),
+    Activity(
+        title: "Short",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.pending,
+        message: "message",
+        fileType: FileType.pyqs),
+    Activity(
+        title: "HC Verma Physics",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.pending,
+        message: "message",
+        fileType: FileType.notes),
+    Activity(
+        title: "Yes",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.approved,
+        message: "message",
+        fileType: FileType.tut),
+    Activity(
+        title: "Sample test title",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.rejected,
+        message: "message",
+        fileType: FileType.book),
+    Activity(
+        title: "Mathematics",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.approved,
+        message: "message",
+        fileType: FileType.link),
+    Activity(
+        title: "Short",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.pending,
+        message: "message",
+        fileType: FileType.pyqs),
+    Activity(
+        title: "HC Verma Physics",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.pending,
+        message: "message",
+        fileType: FileType.notes),
+    Activity(
+        title: "Yes",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.approved,
+        message: "message",
+        fileType: FileType.tut),
+    Activity(
+        title: "Sample test title",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.rejected,
+        message: "message",
+        fileType: FileType.book),
+    Activity(
+        title: "Mathematics",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.approved,
+        message: "message",
+        fileType: FileType.link),
+    Activity(
+        title: "Short",
+        courseCode: "CSN-001",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.pending,
+        message: "message",
+        fileType: FileType.pyqs),
+  ];
 }

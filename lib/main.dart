@@ -18,7 +18,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/bottom_navbar/sp_bottom_navbar.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/explore_flow/explore_page/explore_page.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/home_flow/home_page/home_page.dart';
-import 'package:studyportal/features/studymaterial/presentation/pages/profile_page/profile_page.dart';
+import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/profile_page/profile_page.dart';
 import 'package:studyportal/core/theme/theme_data.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

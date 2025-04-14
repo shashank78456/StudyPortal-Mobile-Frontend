@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/file_tiles/file_tile.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/more_info_button/more_info_button.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/home_flow/see_all_downloaded_page/see_all_downloaded_page.dart';
@@ -23,7 +24,8 @@ class DownloadedSection extends StatelessWidget {
       width: size.width.w,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: const Color(0xFFE3E2E8)),
+        border:
+            Border.all(color: const Color(StudyPortalConstants.spStrokeGrey)),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(

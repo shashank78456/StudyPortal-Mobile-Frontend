@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/utils/searchable.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/not_found_box/not_found_box.dart';
 
@@ -82,7 +83,8 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
             margin: const EdgeInsets.only(bottom: 20).h,
             decoration: BoxDecoration(
               color: Colors.white,
-              border: Border.all(color: const Color(0xFFE3E2E8)),
+              border: Border.all(
+                  color: const Color(StudyPortalConstants.spStrokeGrey)),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Wrap(

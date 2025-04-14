@@ -27,7 +27,7 @@ class FilterTab extends StatelessWidget {
             : Colors.white,
         borderRadius: BorderRadius.circular(4.r),
         border: Border.all(
-          color: const Color(0xFFE3E2E8),
+          color: const Color(StudyPortalConstants.spStrokeGrey),
           width: 1.w,
         ),
       ),

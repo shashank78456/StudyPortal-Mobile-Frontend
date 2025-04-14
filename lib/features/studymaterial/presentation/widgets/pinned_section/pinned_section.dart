@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_pins/fetch_pins_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/branch_card/branch_card.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/loader/loader.dart';
+import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/more_info_button/more_info_button.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/tools/pin_enum.dart';
 
@@ -26,7 +27,9 @@ class PinnedSection extends StatelessWidget {
       padding: const EdgeInsets.all(12).r,
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: const Color(0xFFE3E2E8), width: 1.w),
+          border: Border.all(
+              color: const Color(StudyPortalConstants.spStrokeGrey),
+              width: 1.w),
           borderRadius: BorderRadius.circular(8)),
       width: size.width.w,
       child: Column(

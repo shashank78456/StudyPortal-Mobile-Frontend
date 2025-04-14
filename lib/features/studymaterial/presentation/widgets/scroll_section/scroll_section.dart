@@ -26,7 +26,8 @@ class ScrollSection extends StatelessWidget {
       padding: const EdgeInsets.only(top: 12, bottom: 12).r,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: const Color(0xFFE3E2E8), width: 1.w),
+        border: Border.all(
+            color: const Color(StudyPortalConstants.spStrokeGrey), width: 1.w),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(

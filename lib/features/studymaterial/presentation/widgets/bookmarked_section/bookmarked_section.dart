@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_bookmarks/fetch_bookmarks_cubit.dart';
+import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/file_tiles/file_tile.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/loader/loader.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/more_info_button/more_info_button.dart';
@@ -26,7 +27,8 @@ class BookmarkedSection extends StatelessWidget {
       width: size.width.w,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: const Color(0xFFE3E2E8)),
+        border:
+            Border.all(color: const Color(StudyPortalConstants.spStrokeGrey)),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
