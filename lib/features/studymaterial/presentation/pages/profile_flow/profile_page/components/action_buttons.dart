@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/profile_buttons/profile_button.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/activity_page/activity_page.dart';
+import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/request_page/request_page.dart';
+import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/upload_page/upload_page.dart';
 
 class ActionButtons extends StatelessWidget {
   const ActionButtons({super.key});
@@ -26,7 +28,7 @@ class ActionButtons extends StatelessWidget {
             iconPath: "lib/core/svgs/upload.svg",
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ActivityPage()));
+                  MaterialPageRoute(builder: (context) => const UploadPage()));
             },
           ),
           ProfileButton(
@@ -35,7 +37,7 @@ class ActionButtons extends StatelessWidget {
             iconPath: "lib/core/svgs/request.svg",
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ActivityPage()));
+                  MaterialPageRoute(builder: (context) => const RequestPage()));
             },
           ),
           ProfileButton(
