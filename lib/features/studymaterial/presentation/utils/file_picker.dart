@@ -1,11 +1,14 @@
 import 'package:file_picker/file_picker.dart';
 
-Future<String?> filePicker() async {
+Future<(String?, bool)> filePicker() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
   if (result != null) {
     PlatformFile file = result.files.first;
-    return file.path;
+    if(file.extension != "pdf") {
+      return ("Unsupported FileType", false);
+    }
+    return (file.path, true);
   } else {
-    return null;
+    return ("Invalid Path", false);
   }
 }
