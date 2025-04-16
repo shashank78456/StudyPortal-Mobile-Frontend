@@ -22,4 +22,6 @@ abstract interface class Repository {
   Future<Either<Failure, File>> uploadFileComplete(File file);
   Future<Either<Failure, String>> uploadFileToS3Bucket(
       String filePath, String fileUrl);
+  Future<Either<Failure, List<File>>> fetchRecentFiles();
+  Future<Either<Failure, File>> setRecentFiles(File file);
 }

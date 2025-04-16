@@ -5,6 +5,7 @@ import 'dart:io' as file_handler;
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studyportal/core/errors/exceptions.dart';
 import 'package:studyportal/features/studymaterial/data/models/branch_model.dart';
 import 'package:studyportal/features/studymaterial/data/models/course_model.dart';
@@ -30,6 +31,8 @@ abstract interface class RemoteDataSource {
   Future<String> uploadFile(File file);
   Future<void> uploadFileComplete(File file);
   Future<void> uploadFileToS3Bucket(String fileName, String fileUrl);
+  Future<List<File>> fetchRecentFiles();
+  Future<void> setRecentFiles(File file);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -413,6 +416,50 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       }
     } catch (e) {
       throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<File>> fetchRecentFiles() async {
+    try {
+      final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+      final List<dynamic>? retreivedList =
+          await prefs.getStringList("recentFiles") as List<dynamic>?;
+
+      if (retreivedList == null) {
+        return <File>[];
+      }
+
+      final List<File> recentFiles =
+          retreivedList.map((file) => File.fromJson(file)).toList();
+      return recentFiles;
+    } catch (e) {
+      throw StorageException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> setRecentFiles(File file) async {
+    try {
+      final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+      final List<dynamic>? retreivedList =
+          await prefs.getStringList("recentFiles") as List<dynamic>?;
+
+      List<File> recentFiles = <File>[];
+
+      if (retreivedList != null) {
+        recentFiles = retreivedList.map((file) => File.fromJson(file)).toList();
+
+        recentFiles.insert(0, file);
+      } else {
+        recentFiles.add(file);
+      }
+
+      List<String> encodedFiles =
+          recentFiles.map((file) => jsonEncode(file)).toList();
+      await prefs.setStringList("recentFiles", encodedFiles);
+    } catch (e) {
+      throw StorageException(e.toString());
     }
   }
 }

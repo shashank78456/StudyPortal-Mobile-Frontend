@@ -4,7 +4,7 @@ Future<(String?, bool)> filePicker() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
   if (result != null) {
     PlatformFile file = result.files.first;
-    if(file.extension != "pdf") {
+    if (file.extension != "pdf") {
       return ("Unsupported FileType", false);
     }
     return (file.path, true);

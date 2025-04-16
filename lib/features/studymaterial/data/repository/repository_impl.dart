@@ -153,4 +153,24 @@ class RepositoryImpl implements Repository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, List<File>>> fetchRecentFiles() async {
+    try {
+      final List<File> recentFiles = await remoteDataSource.fetchRecentFiles();
+      return right(recentFiles);
+    } on StorageException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, File>> setRecentFiles(File file) async {
+    try {
+      await remoteDataSource.setRecentFiles(file);
+      return right(file);
+    } on StorageException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }
