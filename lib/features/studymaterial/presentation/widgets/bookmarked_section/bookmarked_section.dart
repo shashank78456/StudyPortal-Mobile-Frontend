@@ -72,7 +72,6 @@ class BookmarkedSection extends StatelessWidget {
                     return FileTile(
                       file: file,
                     );
-                    //add onTap
                   }).toList();
                   if (bookmarkedTiles.isEmpty) {
                     return const Center(

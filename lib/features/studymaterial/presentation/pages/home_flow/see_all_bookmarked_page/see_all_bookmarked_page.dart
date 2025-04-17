@@ -25,7 +25,6 @@ class SeeAllBookmarkedPage extends StatelessWidget {
             return FileTile(
               file: file,
             );
-            //add onTap
           }).toList();
           return Scaffold(
             appBar: AppBar(

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:studyportal/features/studymaterial/data/pre_integration/hardcoded_stuff.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_bookmarks/fetch_bookmarks_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_pins/fetch_pins_cubit.dart';
+import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_recent_files/fetch_recent_files_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/bookmarked_section/bookmarked_section.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/downloaded_section/downloaded_section.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/pinned_section/pinned_section.dart';
@@ -17,6 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<FetchPinsCubit>().getPins();
     context.read<FetchBookmarksCubit>().getBookmarks();
+    context.read<FetchRecentFilesCubit>().getRecentFiles();
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: SafeArea(
@@ -56,8 +58,10 @@ class HomePage extends StatelessWidget {
               SizedBox(
                 height: 24.h,
               ),
-              RecentSection(
-                  size: size, recentTiles: HardCodedConstants.recentTiles),
+              BlocBuilder<FetchRecentFilesCubit, FetchRecentFilesState>(
+                  builder: (context, state) {
+                return RecentSection(size: size, state: state);
+              }),
               SizedBox(
                 height: 24.h,
               ),

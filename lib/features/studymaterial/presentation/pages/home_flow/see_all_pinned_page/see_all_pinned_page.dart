@@ -27,7 +27,6 @@ class SeeAllPinnedPage extends StatelessWidget {
               pin: Pin.none,
               onTap: () => {},
             );
-            //add onTap
           }).toList();
           return Scaffold(
             appBar: AppBar(

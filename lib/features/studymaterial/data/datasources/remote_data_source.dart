@@ -450,6 +450,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       if (retreivedList != null) {
         recentFiles = retreivedList.map((file) => File.fromJson(file)).toList();
 
+        if (recentFiles.length >= 10) {
+          recentFiles.removeLast();
+        }
+
         recentFiles.insert(0, file);
       } else {
         recentFiles.add(file);
