@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -58,7 +59,7 @@ class DownloadedSection extends StatelessWidget {
             child: ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
-              itemCount: 4,
+              itemCount: min(4, downloadedTiles.length),
               itemBuilder: (BuildContext context, int index) {
                 return downloadedTiles[index];
               },
