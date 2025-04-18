@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:studyportal/core/theme/constants.dart';
 
 class ProfileButton extends StatelessWidget {
   const ProfileButton(
       {super.key,
       required this.mainText,
-      required this.subText,
+      this.subText,
       required this.iconPath,
-      required this.onTap});
+      required this.onTap,
+      this.mainTextColor = const Color(StudyPortalConstants.spRoyalBlue)});
 
   final String mainText;
-  final String subText;
+  final String? subText;
+  final Color mainTextColor;
   final String iconPath;
   final Function() onTap;
 
@@ -19,27 +23,38 @@ class ProfileButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(12),
+        height: 76.h,
+        width: 358.w,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16).r,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SvgPicture.asset(iconPath, width: 32, height: 32),
-            const SizedBox(
-              width: 16,
+            SvgPicture.asset(iconPath, width: 32.w, height: 32.h),
+            SizedBox(
+              width: 16.w,
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   mainText,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: mainTextColor),
                 ),
-                Text(
-                  subText,
-                  style:
-                      const TextStyle(fontSize: 16, color: Color(0xFF8E8E93)),
-                )
+                subText != null
+                    ? Text(
+                        subText!,
+                        style: TextStyle(
+                            fontSize: 14.sp,
+                            color:
+                                const Color(StudyPortalConstants.spFontGrey)),
+                      )
+                    : const SizedBox(
+                        height: 0,
+                      )
               ],
             )
           ],

@@ -4,7 +4,7 @@ import 'package:studyportal/features/studymaterial/data/pre_integration/hardcode
 
 class ActivityPage extends StatelessWidget {
   ActivityPage({super.key});
-
+  static get route => MaterialPageRoute(builder: (context) => ActivityPage());
   final List<Activity> activities = HardCodedConstants.activities;
 
   @override

@@ -131,6 +131,13 @@ class HardCodedConstants {
         message: "message",
         fileType: FileType.notes),
     Activity(
+        title: "Landu kumar ke kisse yes bhia ji singh",
+        courseCode: "CSN-002",
+        date: DateTime(2023, 1, 1, 12, 0, 0),
+        status: ActivityStatus.pending,
+        message: "message",
+        fileType: FileType.notes),
+    Activity(
         title: "Yes",
         courseCode: "CSN-001",
         date: DateTime(2023, 1, 1, 12, 0, 0),

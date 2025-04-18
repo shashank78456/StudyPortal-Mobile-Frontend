@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/core/theme/constants.dart';
 
@@ -16,9 +17,9 @@ class YourContributions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 216.h,
       width: size.width,
-      padding: const EdgeInsets.only(left: 12, right: 12, bottom: 6, top: 0),
+      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 0).r,
       decoration: BoxDecoration(
         color: Colors.white,
         border:
@@ -36,46 +37,50 @@ class YourContributions extends StatelessWidget {
                 width: 16,
                 height: 16,
               ),
-              const SizedBox(
-                width: 8,
+              SizedBox(
+                width: 8.w,
               ),
-              const Text("Your contribution",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+              Text(
+                "Your contribution",
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ],
           ),
-          const SizedBox(
-            height: 6,
+          SizedBox(
+            height: 8.h,
           ),
           Stack(
             children: [
-              Positioned.fill(
-                top: 6,
-                bottom: 6,
-                child: SvgPicture.asset(
-                  "lib/core/svgs/file_uploaded.svg",
-                  fit: BoxFit.fill,
-                ),
+              SvgPicture.asset(
+                height: 80.h,
+                "lib/core/svgs/file_uploaded.svg",
+                // fit: BoxFit.fill,
               ),
               Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(4.r)),
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: 120,
+                height: 80.h,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       uploads.toString(),
-                      style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
+                      style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
                           color: Colors.white),
                     ),
-                    const Text(
+                    Text(
                       "Files you uploaded",
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
                     ),
@@ -84,36 +89,38 @@ class YourContributions extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(
+            height: 8.h,
+          ),
           Stack(
             children: [
-              Positioned.fill(
-                top: 6,
-                bottom: 6,
-                child: SvgPicture.asset(
-                  "lib/core/svgs/file_requested.svg",
-                  fit: BoxFit.fill,
-                ),
+              SvgPicture.asset(
+                height: 80.h,
+                "lib/core/svgs/file_requested.svg",
+                // fit: BoxFit.,
               ),
               Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(4.r)),
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: 120,
+                height: 80.h,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       requests.toString(),
-                      style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
+                      style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
                           color: Colors.white),
                     ),
-                    const Text(
+                    Text(
                       "Files you requested",
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/tools/activity_status_enum.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/tools/file_type_enum.dart';
@@ -34,108 +35,120 @@ class ActivityCard extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return SizedBox(
-        width: size.width,
-        height: 128,
-        child: Column(
-          children: [
-            Container(
-                padding: const EdgeInsets.only(
-                    top: 12, left: 12, right: 12, bottom: 12),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                      top: BorderSide(
-                          color: Color(StudyPortalConstants.spStrokeGrey))),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        FileIcons(fileType: activity.fileType),
-                        const SizedBox(
-                          width: 24,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              softWrap: true,
-                              activity.title,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 18),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  activity.courseCode,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14),
-                                ),
-                                const SizedBox(
-                                  width: 24,
-                                ),
-                                Text(
-                                  "${activity.date.day.toString().padLeft(2, '0')} ${_getMonth(activity.date.month)} ${activity.date.year.toString().substring(2)}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        ActivityMessage(status: activity.status),
-                      ],
-                    ),
-                  ],
-                )),
-            SizedBox(
-              width: size.width,
-              height: 2,
-              child: Container(
-                color: const Color(StudyPortalConstants.spStrokeGrey),
+      width: 360.w,
+      height: 118.h,
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(12.r),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                top:
+                    BorderSide(color: Color(StudyPortalConstants.spStrokeGrey)),
+              ),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
               ),
             ),
-            Container(
-                padding: const EdgeInsets.only(
-                    top: 12, left: 12, right: 12, bottom: 12),
-                width: size.width,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                      bottom: BorderSide(
-                          color: Color(StudyPortalConstants.spStrokeGrey))),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FileIcons(fileType: activity.fileType),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        activity.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              activity.courseCode,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            "${activity.date.day.toString().padLeft(2, '0')} ${_getMonth(activity.date.month)} ${activity.date.year.toString().substring(2)}",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ActivityIcon(status: activity.status),
-                    const SizedBox(
-                      width: 16,
+                SizedBox(width: 8.w),
+                ActivityMessage(status: activity.status),
+              ],
+            ),
+          ),
+
+          // Divider
+          Container(
+            width: size.width,
+            height: 2.h,
+            color: const Color(StudyPortalConstants.spStrokeGrey),
+          ),
+
+          // Bottom Message Row
+          Container(
+            padding: EdgeInsets.all(12.r),
+            width: size.width,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom:
+                    BorderSide(color: Color(StudyPortalConstants.spStrokeGrey)),
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ActivityIcon(status: activity.status),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Text(
+                    activity.message,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.sp,
                     ),
-                    Text(
-                      activity.message,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 14),
-                    ),
-                  ],
-                )),
-          ],
-        ));
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   String _getMonth(int month) {

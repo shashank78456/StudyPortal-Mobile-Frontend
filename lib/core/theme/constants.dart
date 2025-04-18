@@ -7,6 +7,7 @@ class StudyPortalConstants {
   static const spGreyLittleDark = 0xFFCECDD0;
   static const spGreen = 0xFF0D891B;
   static const spLightBlue = 0xFF3270E4;
+  static const spFontGrey = 0xFF646675;
 
   static const List<int> spColorList = [
     spRoyalBlue,
