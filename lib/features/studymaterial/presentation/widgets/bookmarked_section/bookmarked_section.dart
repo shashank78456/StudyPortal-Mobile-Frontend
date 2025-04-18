@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,7 @@ class BookmarkedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 322.h,
+      // height: 322.h,
       padding: const EdgeInsets.all(12),
       width: size.width.w,
       decoration: BoxDecoration(
@@ -81,7 +82,7 @@ class BookmarkedSection extends StatelessWidget {
                     return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
-                      itemCount: 4,
+                      itemCount: min(4, bookmarkedTiles.length),
                       itemBuilder: (BuildContext context, int index) {
                         return bookmarkedTiles[index];
                       },

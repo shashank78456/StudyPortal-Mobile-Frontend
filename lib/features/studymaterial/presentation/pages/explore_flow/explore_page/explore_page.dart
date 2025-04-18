@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_branches/fetch_branches_cubit.dart';
+import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_pins/fetch_pins_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/loader/loader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/branch_card/branch_card.dart';
@@ -33,6 +34,7 @@ class _ExplorePageState extends State<ExplorePage>
   @override
   Widget build(BuildContext context) {
     context.read<FetchBranchesCubit>().getBranches();
+    context.read<FetchPinsCubit>().getPins();
     return BlocBuilder<FetchBranchesCubit, FetchBranchesState>(
       builder: (context, state) {
         if (state is FetchBranchesLoading || state is FetchBranchesInitial) {
@@ -41,12 +43,15 @@ class _ExplorePageState extends State<ExplorePage>
           print(state.message);
           return Text(state.message);
         } else if (state is FetchBranchesLoaded) {
+          final List<int> pinnedCardIds =
+              state.branches.map((branch) => branch.id).toList();
           final List<BranchCard> branchCards = state.branches.map((branch) {
             return BranchCard(
               branch: branch,
-              pin: Pin.none,
+              pin: (pinnedCardIds.contains(branch.id))
+                  ? Pin.active
+                  : Pin.inactive,
             );
-            //add onTap
           }).toList();
           return Scaffold(
               body: SafeArea(

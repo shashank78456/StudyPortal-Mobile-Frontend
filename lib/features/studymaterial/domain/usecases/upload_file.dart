@@ -13,8 +13,8 @@ class UploadFile implements UseCase<File, File> {
     if (file.path != null) {
       final response = await repository.uploadFile(file);
       return response.fold((failure) => Left(failure), (presignedUrl) async {
-        final result =
-            await repository.uploadFileToS3Bucket(file.path!, presignedUrl);
+        file.s3Url = presignedUrl;
+        final result = await repository.uploadFileToS3Bucket(file);
         return result.fold((failure) => Left(failure),
             (_) async => await repository.uploadFileComplete(file));
       });

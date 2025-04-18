@@ -144,11 +144,10 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, String>> uploadFileToS3Bucket(
-      String filePath, String fileUrl) async {
+  Future<Either<Failure, File>> uploadFileToS3Bucket(File file) async {
     try {
-      await remoteDataSource.uploadFileToS3Bucket(filePath, fileUrl);
-      return right(fileUrl);
+      await remoteDataSource.uploadFileToS3Bucket(file);
+      return right(file);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }

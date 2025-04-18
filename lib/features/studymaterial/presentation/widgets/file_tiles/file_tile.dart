@@ -1,10 +1,12 @@
 import 'dart:io' as io;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:studyportal/features/studymaterial/data/datasources/remote_data_source.dart';
 import 'package:studyportal/features/studymaterial/domain/entities/file.dart';
+import 'package:studyportal/features/studymaterial/presentation/cubit/download_file/download_file_cubit.dart';
+import 'package:studyportal/features/studymaterial/presentation/cubit/set_recent_files/set_recent_files_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/utils/searchable.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/file_icons/file_icons.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/tools/file_type_enum.dart';
@@ -21,38 +23,59 @@ class FileTile extends StatelessWidget implements Searchable {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        await checkAndOpenPdf(file);
-      },
-      child: SizedBox(
-        height: 48.h,
-        child: Row(
-          children: [
-            FileIcons(fileType: fileTypeFromString(file.type)),
-            SizedBox(width: 16.w),
-            Container(
-              constraints: BoxConstraints(maxWidth: 252.w),
-              child: Text(
-                title,
-                style: TextStyle(
-                    overflow: TextOverflow.ellipsis,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp),
-              ),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<DownloadFileCubit, DownloadFileState>(
+            listener: (context, state) {
+          if (state is DownloadFileFailure) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.message)));
+            print("Failure response : ${state.message}");
+          } else if (state is DownloadFileSuccess) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.file.name)));
+          }
+        })
+      ],
+      child: BlocBuilder<SetRecentFilesCubit, SetRecentFilesState>(
+          builder: (context, state) {
+        final setRecentFilesCubit = context.read<SetRecentFilesCubit>();
+        return InkWell(
+          onTap: () async {
+            await checkAndOpenPdf(file, context.read<DownloadFileCubit>());
+            setRecentFilesCubit.setrecentfiles(file);
+          },
+          child: SizedBox(
+            height: 48.h,
+            child: Row(
+              children: [
+                FileIcons(fileType: fileTypeFromString(file.type)),
+                SizedBox(width: 16.w),
+                Container(
+                  constraints: BoxConstraints(maxWidth: 252.w),
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.sp),
+                  ),
+                ),
+                const Spacer(),
+                SizedBox(width: 8.w),
+                MoreVerticalDots(
+                  file: file,
+                )
+              ],
             ),
-            const Spacer(),
-            SizedBox(width: 8.w),
-            MoreVerticalDots(
-              file: file,
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
     );
   }
 
-  Future<void> checkAndOpenPdf(File file) async {
+  Future<void> checkAndOpenPdf(
+      File file, DownloadFileCubit downloadFileCubit) async {
     final String fileName = file.name;
 
     try {
@@ -75,7 +98,8 @@ class FileTile extends StatelessWidget implements Searchable {
         print("File already exists, opening...");
       } else {
         print("File not found, downloading...");
-        await RemoteDataSourceImpl().downloadFile(file);
+
+        downloadFileCubit.downloadfile(file);
       }
 
       final result = await OpenFile.open(filePath);

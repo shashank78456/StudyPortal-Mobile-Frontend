@@ -30,7 +30,7 @@ abstract interface class RemoteDataSource {
   Future<void> downloadFile(File file);
   Future<String> uploadFile(File file);
   Future<void> uploadFileComplete(File file);
-  Future<void> uploadFileToS3Bucket(String fileName, String fileUrl);
+  Future<void> uploadFileToS3Bucket(File file);
   Future<List<File>> fetchRecentFiles();
   Future<void> setRecentFiles(File file);
 }
@@ -125,8 +125,9 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         throw const ServerException("No Courses");
       }
       return (responseData["data"] as List<dynamic>).map((course) {
-        final fileIds =
-            (course["files"] as List<dynamic>).map((e) => e as int).toList();
+        final fileIds = (course["files"] != null)
+            ? (course["files"] as List<dynamic>).map((e) => e as int).toList()
+            : <int>[];
         course["files"] =
             fileIds; // Optional, in case fromJson expects List<int>
         return CourseModel.fromJson(course);
@@ -391,18 +392,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<void> uploadFileToS3Bucket(String filePath, String fileUrl) async {
+  Future<void> uploadFileToS3Bucket(File file) async {
     try {
-      final file_handler.File file = file_handler.File(filePath);
+      final file_handler.File fileOnSystem = file_handler.File(file.path!);
 
-      if (!await file.exists()) {
-        throw ServerException("File does not exist at $filePath");
+      if (!await fileOnSystem.exists()) {
+        throw ServerException("File does not exist at ${file.path}");
       }
 
-      final bytes = await file.readAsBytes();
+      final bytes = await fileOnSystem.readAsBytes();
 
       final response = await http.put(
-        Uri.parse(fileUrl),
+        Uri.parse(file.s3Url),
         headers: {
           "Content-Type": "application/octet-stream",
         },
@@ -423,15 +424,15 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<List<File>> fetchRecentFiles() async {
     try {
       final SharedPreferencesAsync prefs = SharedPreferencesAsync();
-      final List<dynamic>? retreivedList =
-          await prefs.getStringList("recentFiles") as List<dynamic>?;
+      final List<String>? retreivedList =
+          await prefs.getStringList("recentFiles");
 
       if (retreivedList == null) {
         return <File>[];
       }
-
+      print(retreivedList);
       final List<File> recentFiles =
-          retreivedList.map((file) => File.fromJson(file)).toList();
+          retreivedList.map((file) => File.fromJson(jsonDecode(file))).toList();
       return recentFiles;
     } catch (e) {
       throw StorageException(e.toString());
@@ -442,18 +443,23 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<void> setRecentFiles(File file) async {
     try {
       final SharedPreferencesAsync prefs = SharedPreferencesAsync();
-      final List<dynamic>? retreivedList =
-          await prefs.getStringList("recentFiles") as List<dynamic>?;
+      final List<String>? retreivedList =
+          await prefs.getStringList("recentFiles");
 
       List<File> recentFiles = <File>[];
 
-      if (retreivedList != null) {
-        recentFiles = retreivedList.map((file) => File.fromJson(file)).toList();
+      if (retreivedList != null && retreivedList.isNotEmpty) {
+        recentFiles = retreivedList
+            .map((file) => File.fromJson(jsonDecode(file)))
+            .toList();
 
         if (recentFiles.length >= 10) {
-          recentFiles.removeLast();
+          if (recentFiles.contains(file)) {
+            recentFiles.remove(file);
+          } else {
+            recentFiles.removeLast();
+          }
         }
-
         recentFiles.insert(0, file);
       } else {
         recentFiles.add(file);
