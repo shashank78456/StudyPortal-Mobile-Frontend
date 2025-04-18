@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/profile_page/components/your_contributions.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/profile_page/components/action_buttons.dart';
+import 'package:studyportal/main.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -18,85 +21,88 @@ class ProfilePage extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Stack(
+        body: SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Positioned.fill(
-              top: 6,
-              bottom: 6,
-              child: SvgPicture.asset(
-                "lib/core/svgs/profile_background.svg",
-                fit: BoxFit.fill,
-              ),
-            ),
-            Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                height: 220,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 72,
-                      width: 72,
-                      child: Image.asset(
-                        'lib/features/studymaterial/data/pre_integration/kambli.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Column(
+            Stack(
+              children: [
+                SvgPicture.asset(
+                  height: 140.h,
+                  width: 360.w,
+                  "lib/core/svgs/profile_background.svg",
+                  fit: BoxFit.fill,
+                ),
+                Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: 140.h,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Angad Kambli",
-                          style: TextStyle(
-                              fontSize: 32, fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          "Department of Computer Science",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
+                        SizedBox(
+                          height: 100.h,
+                          width: 100.w,
+                          child: const CircleAvatar(
+                            backgroundImage: AssetImage(
+                              'lib/features/studymaterial/data/pre_integration/kambli.jpg',
+                            ),
                           ),
                         ),
-                        Text(
-                          "a_kambli@cs.iitr.ac.in",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xFF8E8E93),
-                          ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Angad Kambli",
+                              style: TextStyle(
+                                  fontSize: 20.sp, fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              "Department of Computer Science",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              "a_kambli@cs.iitr.ac.in",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(StudyPortalConstants.spGrey),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ],
-                )),
+                    )),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  YourContributions(size: size, uploads: 132, requests: 123),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  const ActionButtons(),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  SvgPicture.asset("lib/core/svgs/sdslabs.svg"),
+                ],
+              ),
+            ),
           ],
         ),
-        Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              YourContributions(size: size, uploads: 132, requests: 123),
-              const SizedBox(
-                height: 20,
-              ),
-              const ActionButtons(),
-              const SizedBox(
-                height: 20,
-              ),
-              SvgPicture.asset("lib/core/svgs/sdslabs.svg"),
-            ],
-          ),
-        ),
-      ],
+      ),
     ));
   }
 }
