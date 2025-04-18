@@ -98,7 +98,7 @@ class FileTile extends StatelessWidget implements Searchable {
         print("File already exists, opening...");
       } else {
         print("File not found, downloading...");
-        
+
         downloadFileCubit.downloadfile(file);
       }
 
