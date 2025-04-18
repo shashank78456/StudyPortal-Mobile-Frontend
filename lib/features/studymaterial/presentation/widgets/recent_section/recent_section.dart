@@ -22,7 +22,7 @@ class RecentSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 322.h,
+      // height: 322.h,
       padding: const EdgeInsets.all(12).r,
       width: size.width.w,
       decoration: BoxDecoration(

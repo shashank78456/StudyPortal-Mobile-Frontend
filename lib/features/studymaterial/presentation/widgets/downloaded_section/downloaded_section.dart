@@ -19,9 +19,9 @@ class DownloadedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 322.h,
+      //height: 322.h,
       padding: const EdgeInsets.all(12).w,
-      width: size.width.w,
+      // width: size.width.w,
       decoration: BoxDecoration(
         color: Colors.white,
         border:

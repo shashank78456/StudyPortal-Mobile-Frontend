@@ -31,7 +31,7 @@ class MoreVerticalDots extends StatelessWidget {
           }
         },
         child: PopupMenuButton(
-          constraints: BoxConstraints(maxHeight: 120.h, maxWidth: 124.w),
+          constraints: BoxConstraints(maxHeight: 120.h, maxWidth: 132.w),
           padding: EdgeInsets.zero,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -46,11 +46,10 @@ class MoreVerticalDots extends StatelessWidget {
           color: Colors.white,
           menuPadding: EdgeInsets.only(top: 6.h, bottom: 7.h),
           itemBuilder: (context) => [
-            SPPopupMenuItem(
-                img: "lib/core/svgs/bookmark.svg",
-                "Bookmark",
-                onTap: () {},
-                title: "Bookmark"),
+            SPPopupMenuItem(img: "lib/core/svgs/bookmark.svg", "Bookmark",
+                onTap: () {
+              //TODO: write bookmark logic
+            }, title: "Bookmark"),
             SPPopupMenuItem(img: "lib/core/svgs/download_icon.svg", "Download",
                 onTap: () {
               context.read<DownloadFileCubit>().downloadFile(file);
@@ -62,12 +61,15 @@ class MoreVerticalDots extends StatelessWidget {
               showReportSheet(context);
             }, title: "Report"),
           ],
-          child: SvgPicture.asset(
-            "lib/core/svgs/more_vertical_dots.svg",
-            colorFilter:
-                ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn),
-            height: height ?? 16.h,
-            width: width ?? 16.w,
+          child: SizedBox(
+            width: 24.w,
+            child: SvgPicture.asset(
+              "lib/core/svgs/more_vertical_dots.svg",
+              colorFilter:
+                  ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn),
+              height: height ?? 16.h,
+              width: width ?? 16.w,
+            ),
           ),
         ));
   }

@@ -7,7 +7,6 @@ import 'package:studyportal/features/studymaterial/domain/usecases/add_pin.dart'
 import 'package:studyportal/features/studymaterial/domain/usecases/download_file.dart';
 import 'package:studyportal/features/studymaterial/domain/usecases/fetch_bookmarks.dart';
 import 'package:studyportal/features/studymaterial/domain/usecases/fetch_courses.dart';
-import 'package:studyportal/features/studymaterial/domain/usecases/fetch_file.dart';
 import 'package:studyportal/features/studymaterial/domain/usecases/fetch_files.dart';
 import 'package:studyportal/features/studymaterial/domain/usecases/fetch_pins.dart';
 import 'package:studyportal/features/studymaterial/domain/usecases/fetch_branches.dart';
@@ -22,7 +21,6 @@ import 'package:studyportal/features/studymaterial/presentation/cubit/download_f
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_bookmarks/fetch_bookmarks_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_branches/fetch_branches_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_courses/fetch_courses_cubit.dart';
-import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_file/fetch_file_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_files/fetch_files_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/cubit/fetch_pins/fetch_pins_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,9 +63,6 @@ void main() {
     BlocProvider(
         create: (_) => UploadFileCubit(
             uploadfile: UploadFile(RepositoryImpl(RemoteDataSourceImpl())))),
-    BlocProvider(
-        create: (_) => FetchFileCubit(
-            fetchFile: FetchFile(RepositoryImpl(RemoteDataSourceImpl())))),
     BlocProvider(
         create: (_) => DownloadFileCubit(
             downloadfile:

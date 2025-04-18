@@ -30,7 +30,7 @@ abstract interface class RemoteDataSource {
   Future<void> downloadFile(File file);
   Future<String> uploadFile(File file);
   Future<void> uploadFileComplete(File file);
-  Future<void> uploadFileToS3Bucket(String fileName, String fileUrl);
+  Future<void> uploadFileToS3Bucket(File file);
   Future<List<File>> fetchRecentFiles();
   Future<void> setRecentFiles(File file);
 }
@@ -391,18 +391,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<void> uploadFileToS3Bucket(String filePath, String fileUrl) async {
+  Future<void> uploadFileToS3Bucket(File file) async {
     try {
-      final file_handler.File file = file_handler.File(filePath);
+      final file_handler.File fileOnSystem = file_handler.File(file.path!);
 
-      if (!await file.exists()) {
-        throw ServerException("File does not exist at $filePath");
+      if (!await fileOnSystem.exists()) {
+        throw ServerException("File does not exist at ${file.path}");
       }
 
-      final bytes = await file.readAsBytes();
+      final bytes = await fileOnSystem.readAsBytes();
 
       final response = await http.put(
-        Uri.parse(fileUrl),
+        Uri.parse(file.s3Url),
         headers: {
           "Content-Type": "application/octet-stream",
         },

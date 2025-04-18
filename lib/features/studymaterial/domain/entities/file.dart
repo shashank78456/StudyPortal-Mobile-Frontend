@@ -2,7 +2,7 @@ class File {
   final int id;
   final String name;
   final String courseCode;
-  final String s3Url;
+  String s3Url;
   final String status;
   final String description;
   final String type;

@@ -51,8 +51,8 @@ class FileIcon extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5).r,
       alignment: Alignment.center,
-      height: 46.r,
-      width: 46.r,
+      height: 50.r,
+      width: 50.r,
       decoration:
           BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
       child: Text(

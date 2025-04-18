@@ -20,8 +20,7 @@ abstract interface class Repository {
   Future<Either<Failure, File>> downloadFile(File file);
   Future<Either<Failure, String>> uploadFile(File file);
   Future<Either<Failure, File>> uploadFileComplete(File file);
-  Future<Either<Failure, String>> uploadFileToS3Bucket(
-      String filePath, String fileUrl);
+  Future<Either<Failure, File>> uploadFileToS3Bucket(File file);
   Future<Either<Failure, List<File>>> fetchRecentFiles();
   Future<Either<Failure, File>> setRecentFiles(File file);
 }

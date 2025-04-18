@@ -1,8 +1,13 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/domain/entities/branch.dart';
+import 'package:studyportal/features/studymaterial/domain/entities/pin.dart'
+    as pin_model;
+import 'package:studyportal/features/studymaterial/presentation/cubit/add_pin/add_pin_cubit.dart';
+import 'package:studyportal/features/studymaterial/presentation/cubit/remove_pin/remove_pin_cubit.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/explore_flow/course_list_page/course_list_page.dart';
 import 'package:studyportal/features/studymaterial/presentation/utils/searchable.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/bookmarked_pin/pin_active.dart';
@@ -20,6 +25,7 @@ class BranchCard extends StatelessWidget implements Searchable {
   String get title => branch.name;
   @override
   Widget build(BuildContext context) {
+    // need to update widget state after removing and adding pins
     return GestureDetector(
       // onTap: onTap ??
       onTap: onTap ??
@@ -53,13 +59,49 @@ class BranchCard extends StatelessWidget implements Searchable {
                   ),
                   Align(
                     alignment: AlignmentDirectional.topEnd,
-                    child: Container(
-                      margin: const EdgeInsets.all(10).w,
-                      child: (pin == Pin.inactive)
-                          ? const PinInactive()
-                          : (pin == Pin.active)
-                              ? const SizedBox(child: PinActive())
-                              : const Opacity(opacity: 0),
+                    child: InkWell(
+                      onTap: () {
+                        if (pin == Pin.active) {
+                          context
+                              .read<RemovePinCubit>()
+                              .removepin(pin_model.Pin(branchId: branch.id));
+                          BlocListener<RemovePinCubit, RemovePinState>(
+                              listener: (context, state) {
+                            if (state is RemovePinFailure) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)));
+                            } else if (state is RemovePinSuccess) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text("Pin removed successfully")));
+                            }
+                          });
+                        } else if (pin == Pin.inactive) {
+                          context
+                              .read<AddPinCubit>()
+                              .addPin(pin_model.Pin(branchId: branch.id));
+                          BlocListener<AddPinCubit, AddPinState>(
+                              listener: (context, state) {
+                            if (state is AddPinFailure) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)));
+                            } else if (state is AddPinSuccess) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Pin added successfully")));
+                            }
+                          });
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(10).w,
+                        child: (pin == Pin.inactive)
+                            ? const PinInactive()
+                            : (pin == Pin.active)
+                                ? const SizedBox(child: PinActive())
+                                : const Opacity(opacity: 0),
+                      ),
                     ),
                   )
                 ],
