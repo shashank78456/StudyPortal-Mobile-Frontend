@@ -39,33 +39,34 @@ class _UploadPageState extends State<UploadPage> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0).r,
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Upload File',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Text(
+                  //     'Upload File',
+                  //     style: TextStyle(
+                  //       fontSize: 16.sp,
+                  //       fontWeight: FontWeight.w500,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 16.0.h),
                   SizedBox(
                     width: double.infinity,
-                    height: 100.0,
+                    height: 120.h,
                     child: ElevatedButton(
                       onPressed: () {
                         // Implement file picker functionality here
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
+                        padding: const EdgeInsets.all(8).r,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
+                          borderRadius: BorderRadius.circular(4.0).r,
                         ),
                       ),
                       child: Column(
@@ -73,20 +74,24 @@ class _UploadPageState extends State<UploadPage> {
                         children: [
                           SvgPicture.asset(
                             'lib/core/svgs/upload_file.svg',
-                            height: 48.0,
-                            width: 48.0,
+                            height: 48.0.h,
+                            width: 48.0.w,
                           ),
-                          const SizedBox(height: 8.0),
-                          const Text(
+                          SizedBox(height: 8.0.h),
+                          Text(
                             'Select file from your system',
                             style: TextStyle(
-                              fontSize: 16.0,
-                              color: Color(StudyPortalConstants.spRoyalBlue),
+                              fontSize: 16.0.sp,
+                              color:
+                                  const Color(StudyPortalConstants.spRoyalBlue),
                             ),
                           ),
                         ],
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Align(
                     alignment: Alignment.center,
@@ -98,7 +103,7 @@ class _UploadPageState extends State<UploadPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: 20.0.h),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -109,20 +114,22 @@ class _UploadPageState extends State<UploadPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8.0),
+                  SizedBox(height: 8.0.h),
                   TextFormField(
                     controller: _courseCodeController,
-                    decoration: const InputDecoration(
-                      labelText: 'Course Code',
+                    decoration: InputDecoration(
+                      labelStyle: const TextStyle(),
                       hintText:
                           ' Eg: DEP-101 (Introduction to Departmental course)',
                       hintStyle: TextStyle(
-                          fontSize: 16,
-                          color: Color(StudyPortalConstants.spGrey)),
-                      labelStyle:
-                          TextStyle(color: Color(StudyPortalConstants.spGrey)),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(StudyPortalConstants.spGrey)),
+                      // labelStyle:
+                      //     TextStyle(color: Color(StudyPortalConstants.spGrey)),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8.0)).r,
                       ),
                     ),
                     validator: (value) {
@@ -135,7 +142,7 @@ class _UploadPageState extends State<UploadPage> {
                       setState(() {});
                     },
                   ),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: 16.0.h),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -146,9 +153,9 @@ class _UploadPageState extends State<UploadPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: 16.0.h),
                   const RequestedFileTabs(),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: 16.0.h),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -159,19 +166,19 @@ class _UploadPageState extends State<UploadPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: 16.0.h),
                   TextFormField(
                     controller: _fileDescriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'File Description',
+                    decoration: InputDecoration(
                       hintText: ' Eg: Previous year quiz papers...',
                       hintStyle: TextStyle(
-                          fontSize: 16,
-                          color: Color(StudyPortalConstants.spGrey)),
-                      labelStyle:
-                          TextStyle(color: Color(StudyPortalConstants.spGrey)),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(StudyPortalConstants.spGrey)),
+                      labelStyle: const TextStyle(),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(4.0)).r,
                       ),
                     ),
                     maxLines: 5,
@@ -185,10 +192,10 @@ class _UploadPageState extends State<UploadPage> {
                       setState(() {});
                     },
                   ),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: 16.0.h),
                   SizedBox(
                     width: double.infinity,
-                    height: 50.0,
+                    height: 60.h,
                     child: ElevatedButton(
                       onPressed: _courseCodeController.text.isNotEmpty &&
                               _fileDescriptionController.text.isNotEmpty
@@ -202,19 +209,19 @@ class _UploadPageState extends State<UploadPage> {
                                     return AlertDialog(
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                            BorderRadius.circular(8.0).r,
                                       ),
                                       title: const Text('File Upload Complete'),
-                                      content: const Column(
+                                      content: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.check_circle_outline,
                                             color: Colors.green,
                                             size: 48.0,
                                           ),
-                                          SizedBox(height: 16.0),
-                                          Text(
+                                          SizedBox(height: 16.0.h),
+                                          const Text(
                                               'Our team will review the file before uploading it to the portal'),
                                         ],
                                       ),
@@ -239,10 +246,13 @@ class _UploadPageState extends State<UploadPage> {
                             ? const Color(StudyPortalConstants.spRoyalBlue)
                             : const Color(StudyPortalConstants.spStrokeGrey),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
+                          borderRadius: BorderRadius.circular(4.0).r,
                         ),
                       ),
-                      child: const Text('Submit'),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(fontSize: 20.sp),
+                      ),
                     ),
                   ),
                 ],

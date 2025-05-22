@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/activity_card/activity_card.dart';
 import 'package:studyportal/features/studymaterial/data/pre_integration/hardcoded_stuff.dart';
 
@@ -12,17 +13,17 @@ class ActivityPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
-        title: const Align(
+        title: Align(
           alignment: Alignment.centerLeft,
           child: Text(
             "Activity",
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24.sp),
           ),
         ),
       ),
       body: SafeArea(
         child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0).r,
             child: ListView(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
@@ -31,11 +32,14 @@ class ActivityPage extends StatelessWidget {
                     Column(
                       children: [
                         ActivityCard(activity: activities[index]),
-                        const SizedBox(
-                          height: 6,
+                        SizedBox(
+                          height: 6.h,
                         ),
                       ],
                     ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                 ])),
       ),
     );

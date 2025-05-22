@@ -35,8 +35,8 @@ class ActivityCard extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return SizedBox(
-      width: 360.w,
-      height: 118.h,
+      width: double.infinity,
+      height: 128.h,
       child: Column(
         children: [
           Container(
@@ -70,10 +70,10 @@ class ActivityCard extends StatelessWidget {
                           fontSize: 14.sp,
                         ),
                       ),
-                      SizedBox(height: 4.h),
+                      SizedBox(height: 8.h),
                       Row(
                         children: [
-                          Expanded(
+                          SizedBox(
                             child: Text(
                               activity.courseCode,
                               overflow: TextOverflow.ellipsis,
@@ -84,7 +84,7 @@ class ActivityCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(width: 8.w),
+                          SizedBox(width: 20.w),
                           Text(
                             "${activity.date.day.toString().padLeft(2, '0')} ${_getMonth(activity.date.month)} ${activity.date.year.toString().substring(2)}",
                             overflow: TextOverflow.ellipsis,
@@ -100,7 +100,12 @@ class ActivityCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 8.w),
-                ActivityMessage(status: activity.status),
+                Column(
+                  children: [
+                    SizedBox(height: 8.h),
+                    ActivityMessage(status: activity.status),
+                  ],
+                ),
               ],
             ),
           ),
