@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/profile_page/components/your_contributions.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/profile_page/components/action_buttons.dart';
-import 'package:studyportal/main.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -28,11 +27,13 @@ class ProfilePage extends StatelessWidget {
           children: [
             Stack(
               children: [
-                SvgPicture.asset(
-                  height: 140.h,
-                  width: 360.w,
-                  "lib/core/svgs/profile_background.svg",
-                  fit: BoxFit.fill,
+                SizedBox(
+                  width: double.infinity,
+                  child: SvgPicture.asset(
+                    // height: 140.h,
+                    "lib/core/svgs/profile_background.svg",
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 Container(
                     alignment: Alignment.center,

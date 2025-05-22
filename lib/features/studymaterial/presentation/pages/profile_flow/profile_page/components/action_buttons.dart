@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:studyportal/core/theme/constants.dart';
 import 'package:studyportal/features/studymaterial/presentation/widgets/profile_buttons/profile_button.dart';
 import 'package:studyportal/features/studymaterial/presentation/pages/profile_flow/activity_page/activity_page.dart';
@@ -14,7 +13,7 @@ class ActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 306.h,
-      width: 358.w,
+      width: double.infinity,
       // padding: const EdgeInsets.all(12).r,
       decoration: BoxDecoration(
         color: Colors.white,

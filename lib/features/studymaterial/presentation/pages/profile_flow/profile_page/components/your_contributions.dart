@@ -17,9 +17,9 @@ class YourContributions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 216.h,
+      height: 224.h,
       width: size.width,
-      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 0).r,
+      padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12, top: 0).r,
       decoration: BoxDecoration(
         color: Colors.white,
         border:
@@ -54,10 +54,13 @@ class YourContributions extends StatelessWidget {
           ),
           Stack(
             children: [
-              SvgPicture.asset(
-                height: 80.h,
-                "lib/core/svgs/file_uploaded.svg",
-                // fit: BoxFit.fill,
+              SizedBox(
+                width: double.infinity,
+                child: SvgPicture.asset(
+                  height: 80.h,
+                  "lib/core/svgs/file_uploaded.svg",
+                  // fit: BoxFit.fill,
+                ),
               ),
               Container(
                 decoration:
@@ -94,10 +97,13 @@ class YourContributions extends StatelessWidget {
           ),
           Stack(
             children: [
-              SvgPicture.asset(
-                height: 80.h,
-                "lib/core/svgs/file_requested.svg",
-                // fit: BoxFit.,
+              SizedBox(
+                width: double.infinity,
+                child: SvgPicture.asset(
+                  height: 80.h,
+                  "lib/core/svgs/file_requested.svg",
+                  // fit: BoxFit.fill,
+                ),
               ),
               Container(
                 decoration:

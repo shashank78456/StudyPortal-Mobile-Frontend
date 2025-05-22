@@ -7,7 +7,7 @@ class RequestPage extends StatefulWidget {
   const RequestPage({super.key});
 
   @override
-  _RequestPageState createState() => _RequestPageState();
+  State<RequestPage> createState() => _RequestPageState();
 }
 
 class _RequestPageState extends State<RequestPage> {
@@ -139,32 +139,33 @@ class _RequestPageState extends State<RequestPage> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                              return AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                title: const Text('File Request Complete'),
-                                content: const Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                  Icons.check_circle_outline,
-                                  color: Colors.green,
-                                  size: 48.0,
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  SizedBox(height: 16.0),
-                                  Text('Our team will try to get the requested file ASAP'),
-                                ],
-                                ),
-                                actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                  Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Check Status'),
-                                ),
-                                ],
-                              );
+                                  title: const Text('File Request Complete'),
+                                  content: const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.green,
+                                        size: 48.0,
+                                      ),
+                                      SizedBox(height: 16.0),
+                                      Text(
+                                          'Our team will try to get the requested file ASAP'),
+                                    ],
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Check Status'),
+                                    ),
+                                  ],
+                                );
                               },
                             );
                           }
